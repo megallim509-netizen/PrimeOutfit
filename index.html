@@ -96,8 +96,9 @@
 
     .products {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 22px;
+      align-items: stretch;
     }
 
     .card {
@@ -107,6 +108,9 @@
       overflow: hidden;
       box-shadow: 0 10px 25px rgba(0,0,0,0.25);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
     }
 
     .card:hover {
@@ -124,6 +128,9 @@
 
     .card-content {
       padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
     }
 
     .brand-tag {
@@ -134,44 +141,50 @@
       padding: 6px 10px;
       border-radius: 999px;
       margin-bottom: 12px;
+      width: fit-content;
     }
 
     .product-name {
       font-size: 20px;
       margin-bottom: 10px;
       color: #fff;
+      min-height: 56px;
+      line-height: 1.25;
     }
 
     .price {
       font-size: 18px;
       font-weight: bold;
       color: #facc15;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
-    .info {
+    .info-label {
       color: #cbd5e1;
       font-size: 14px;
-      line-height: 1.7;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
 
-    .stock {
-      margin-bottom: 14px;
-      font-size: 14px;
-      font-weight: bold;
+    .size-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
     }
 
-    .stock.ready {
-      color: #4ade80;
+    .size-badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #1e293b;
+      color: #e2e8f0;
+      font-size: 13px;
+      border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .stock.low {
-      color: #facc15;
-    }
-
-    .stock.empty {
+    .size-badge.soldout {
+      background: rgba(248,113,113,0.15);
       color: #f87171;
+      border-color: rgba(248,113,113,0.35);
     }
 
     .telegram-btn {
@@ -185,6 +198,7 @@
       border-radius: 12px;
       font-weight: bold;
       transition: 0.2s ease;
+      margin-top: auto;
     }
 
     .telegram-btn:hover {
@@ -215,6 +229,16 @@
       line-height: 1.7;
     }
 
+    .empty-state {
+      grid-column: 1 / -1;
+      background: #111827;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      color: #cbd5e1;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
     @media (max-width: 640px) {
       .topbar {
         flex-direction: column;
@@ -227,6 +251,10 @@
 
       .header h1 {
         font-size: 28px;
+      }
+
+      .product-name {
+        min-height: auto;
       }
     }
   </style>
@@ -241,7 +269,7 @@
   <div class="topbar">
     <div class="brand-filter" id="brandFilter"></div>
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Cari baju, brand, size..." />
+      <input type="text" id="searchInput" placeholder="Cari baju, brand, ukuran..." />
     </div>
   </div>
 
@@ -262,67 +290,71 @@
   </div>
 
   <script>
-    // =========================
-    // GANTI USERNAME TELEGRAM DI SINI
-    // contoh: const telegramUsername = "namatelegramkamu";
-    // TANPA @
-    // =========================
     const telegramUsername = "usernamekamu";
 
-    // =========================
-    // DATA PRODUK
-    // KAMU BISA EDIT BAGIAN INI NANTI
-    // =========================
     const products = [
       {
         brand: "Lacoste",
         name: "Polo Lacoste White",
         price: "Rp450.000",
-        size: "M, L, XL",
         stock: 8,
+        sizes: [
+          { name: "M", soldOut: false },
+          { name: "L", soldOut: false },
+          { name: "XL", soldOut: false }
+        ],
         image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80"
       },
       {
         brand: "Lacoste",
         name: "Polo Lacoste Black",
         price: "Rp470.000",
-        size: "M, L, XL",
         stock: 3,
+        sizes: [
+          { name: "M", soldOut: false },
+          { name: "L", soldOut: true },
+          { name: "XL", soldOut: false }
+        ],
         image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80"
       },
       {
         brand: "Fred Perry",
         name: "Fred Perry Twin Tipped Shirt",
         price: "Rp520.000",
-        size: "S, M, L",
         stock: 5,
+        sizes: [
+          { name: "S", soldOut: false },
+          { name: "M", soldOut: false },
+          { name: "L", soldOut: false }
+        ],
         image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=80"
       },
       {
         brand: "Fred Perry",
         name: "Fred Perry Black Polo",
         price: "Rp500.000",
-        size: "M, L, XL",
         stock: 0,
+        sizes: [
+          { name: "M", soldOut: true },
+          { name: "L", soldOut: true },
+          { name: "XL", soldOut: true }
+        ],
         image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        brand: "Burberry",
-        name: "Burberry Beige Tee",
-        price: "Rp600.000",
-        size: "M, L",
-        stock: 2,
-        image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        brand: "Ralph Lauren",
-        name: "Ralph Lauren Navy Polo",
-        price: "Rp550.000",
-        size: "S, M, L, XL",
-        stock: 6,
-        image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=900&q=80"
       }
     ];
+
+    function normalizeProducts() {
+      products.forEach(product => {
+        if (product.stock === 0) {
+          product.sizes = product.sizes.map(size => ({
+            ...size,
+            soldOut: true
+          }));
+        }
+      });
+    }
+
+    normalizeProducts();
 
     let activeBrand = "Semua";
 
@@ -330,19 +362,19 @@
     const brandFilter = document.getElementById("brandFilter");
     const searchInput = document.getElementById("searchInput");
 
-    function getStockClass(stock) {
-      if (stock === 0) return "empty";
-      if (stock <= 3) return "low";
-      return "ready";
-    }
-
-    function getStockText(stock) {
-      if (stock === 0) return "Stok habis";
-      return "Stok: " + stock;
-    }
-
     function telegramLink(product) {
-      const text = `Halo kak, saya mau order:%0A%0ABrand: ${product.brand}%0ANama: ${product.name}%0AHarga: ${product.price}%0ASize: ${product.size}`;
+      const availableSizes = product.sizes
+        .filter(size => !size.soldOut)
+        .map(size => size.name)
+        .join(", ");
+
+      const text =
+        `Halo kak, saya mau order:%0A%0A` +
+        `Brand: ${product.brand}%0A` +
+        `Nama: ${product.name}%0A` +
+        `Harga: ${product.price}%0A` +
+        `Ukuran tersedia: ${availableSizes || "Silakan tanya admin"}`;
+
       return `https://t.me/${telegramUsername}?text=${text}`;
     }
 
@@ -350,7 +382,7 @@
       const brands = ["Semua", ...new Set(products.map(p => p.brand))];
 
       brandFilter.innerHTML = brands.map(brand => `
-        <button class="brand-btn ${brand === activeBrand ? 'active' : ''}" onclick="setBrand('${brand}')">
+        <button class="brand-btn ${brand === activeBrand ? "active" : ""}" onclick="setBrand('${brand}')">
           ${brand}
         </button>
       `).join("");
@@ -361,14 +393,22 @@
 
       const filtered = products.filter(product => {
         const matchBrand = activeBrand === "Semua" || product.brand === activeBrand;
-        const text = `${product.brand} ${product.name} ${product.size} ${product.price}`.toLowerCase();
-        const matchSearch = text.includes(keyword);
+
+        const searchableText = [
+          product.brand,
+          product.name,
+          product.price,
+          ...product.sizes.map(size => size.name)
+        ].join(" ").toLowerCase();
+
+        const matchSearch = searchableText.includes(keyword);
+
         return matchBrand && matchSearch;
       });
 
       if (filtered.length === 0) {
         productList.innerHTML = `
-          <div style="grid-column: 1/-1; background:#111827; padding:30px; border-radius:20px; text-align:center; color:#cbd5e1;">
+          <div class="empty-state">
             Produk tidak ditemukan.
           </div>
         `;
@@ -382,14 +422,19 @@
             <span class="brand-tag">${product.brand}</span>
             <h3 class="product-name">${product.name}</h3>
             <div class="price">${product.price}</div>
-            <div class="info">
-              <div><strong>Size:</strong> ${product.size}</div>
+
+            <div class="info-label"><strong>Ukuran:</strong></div>
+            <div class="size-list">
+              ${product.sizes.map(size => `
+                <span class="size-badge ${size.soldOut ? "soldout" : ""}">
+                  ${size.name}${size.soldOut ? " - Sold Out" : ""}
+                </span>
+              `).join("")}
             </div>
-            <div class="stock ${getStockClass(product.stock)}">${getStockText(product.stock)}</div>
-            ${product.stock === 0
-              ? `<a class="telegram-btn" href="${telegramLink(product)}" target="_blank">Tanya via Telegram</a>`
-              : `<a class="telegram-btn" href="${telegramLink(product)}" target="_blank">Order via Telegram</a>`
-            }
+
+            <a class="telegram-btn" href="${telegramLink(product)}" target="_blank">
+              Order via Telegram
+            </a>
           </div>
         </div>
       `).join("");
