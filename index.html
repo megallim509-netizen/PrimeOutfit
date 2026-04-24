@@ -280,7 +280,6 @@
   </div>
 
   <div class="topbar">
-    <div class="brand-filter" id="brandFilter"></div>
     <div class="search-box">
       <input type="text" id="searchInput" placeholder="Cari baju, brand, ukuran..." />
     </div>
@@ -368,12 +367,6 @@
 
     normalizeProducts();
 
-    let activeBrand = "Semua";
-
-    const productList = document.getElementById("productList");
-    const brandFilter = document.getElementById("brandFilter");
-    const searchInput = document.getElementById("searchInput");
-
     function telegramLink(product) {
       const availableSizes = product.sizes
         .filter(size => !size.soldOut)
@@ -413,21 +406,11 @@
       }
     }
 
-    function renderBrands() {
-      const brands = ["Semua", ...new Set(products.map(p => p.brand))];
-
-      brandFilter.innerHTML = brands.map(brand => `
-        <button class="brand-btn ${brand === activeBrand ? "active" : ""}" onclick="setBrand('${brand}')">
-          ${brand}
-        </button>
-      `).join("");
-    }
-
     function renderProducts() {
       const keyword = searchInput.value.toLowerCase();
 
       const filtered = products.filter(product => {
-        const matchBrand = activeBrand === "Semua" || product.brand === activeBrand;
+        const matchBrand = true;
 
         const searchableText = [
           product.brand,
@@ -480,15 +463,8 @@
       `).join("");
     }
 
-    function setBrand(brand) {
-      activeBrand = brand;
-      renderBrands();
-      renderProducts();
-    }
-
     searchInput.addEventListener("input", renderProducts);
 
-    renderBrands();
     renderProducts();
   </script>
 </body>
