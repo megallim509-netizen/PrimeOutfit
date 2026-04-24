@@ -1,476 +1,419 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Prime Outfit</title>
-  <meta name="robots" content="noindex" />
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prime Outfit</title>
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #0b1220;
-      color: #fff;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
 
-    .header {
-      background: linear-gradient(135deg, #111827, #1f2937);
-      padding: 28px 20px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
+body{
+  font-family: 'Segoe UI',sans-serif;
+  background:#0a0a0a;
+  color:#fff;
+}
 
-    .header h1 {
-      font-size: 34px;
-      margin-bottom: 8px;
-      color: #f8fafc;
-    }
+.header{
+  background:rgba(10,10,10,.8);
+  backdrop-filter:blur(10px);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 40px;
+  border-bottom:1px solid #222;
+  z-index:100;
+}
 
-    .header p {
-      color: #cbd5e1;
-      font-size: 15px;
-    }
+.logo{
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:3px;
+}
 
-    .topbar {
-      padding: 16px 20px;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-      justify-content: space-between;
-    }
+.logo span{color:#d4af37}
 
-    .brand-filter {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+.nav a{
+  margin-left:20px;
+  text-decoration:none;
+  color:#aaa;
+  font-size:14px;
+}
 
-    .brand-btn {
-      background: #1e293b;
-      color: #e2e8f0;
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 10px 16px;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: 0.2s ease;
-      font-size: 14px;
-    }
+.nav a:hover{color:#fff}
 
-    .brand-btn:hover,
-    .brand-btn.active {
-      background: #22c55e;
-      color: #08110d;
-      font-weight: bold;
-    }
+.hero{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  align-items:center;
+  min-height:90vh;
+  padding:60px 40px;
+  gap:40px;
+}
 
-    .search-box input {
-      width: 260px;
-      max-width: 100%;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: none;
-      outline: none;
-      background: #1e293b;
-      color: #fff;
-    }
+.hero-text h1{
+  font-size:60px;
+  line-height:1.1;
+}
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 10px 20px 40px;
-    }
+.hero-text span{
+  color:#d4af37;
+}
 
-    .section-title {
-      margin: 18px 0 20px;
-      font-size: 24px;
-      color: #f8fafc;
-    }
+.hero-text p{
+  margin:20px 0;
+  color:#bbb;
+  max-width:400px;
+}
 
-    .products {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 22px;
-      align-items: stretch;
-    }
+.btn{
+  display:inline-block;
+  padding:12px 25px;
+  border-radius:30px;
+  border:1px solid #d4af37;
+  color:#d4af37;
+  text-decoration:none;
+}
 
-    .card {
-      background: #111827;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
+.btn:hover{
+  background:#d4af37;
+  color:#000;
+}
 
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 35px rgba(0,0,0,0.35);
-    }
+.hero-img{
+  height:500px;
+  border-radius:20px;
+  background:
+    linear-gradient(rgba(0,0,0,.3),rgba(0,0,0,.6)),
+    url("Logo Toko.png") center/cover;
+}
 
-    .card img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-      display: block;
-      background: #0f172a;
-    }
+/* SECTION */
+.container{
+  padding:60px 40px;
+}
 
-    .card-content {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-    }
+.title{
+  text-align:center;
+  margin-bottom:40px;
+}
 
-    .brand-tag {
-      display: inline-block;
-      background: rgba(34,197,94,0.15);
-      color: #86efac;
-      font-size: 12px;
-      padding: 6px 10px;
-      border-radius: 999px;
-      margin-bottom: 12px;
-      width: fit-content;
-    }
+.title span{color:#d4af37}
 
-    .product-name {
-      font-size: 20px;
-      margin-bottom: 10px;
-      color: #fff;
-      min-height: 56px;
-      line-height: 1.25;
-    }
+/* SEARCH */
+.search{
+  display:flex;
+  justify-content:center;
+  margin-bottom:30px;
+}
 
-    .price {
-      font-size: 18px;
-      font-weight: bold;
-      color: #facc15;
-      margin-bottom: 12px;
-    }
+.search input{
+  width:300px;
+  padding:12px;
+  border-radius:30px;
+  border:1px solid #333;
+  background:#111;
+  color:#fff;
+}
 
-    .info-label {
-      color: #cbd5e1;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
+/* PRODUCTS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:25px;
+}
 
-    .size-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
+.card{
+  background:#111;
+  border-radius:15px;
+  overflow:hidden;
+  transition:.3s;
+}
 
-    .size-badge {
-      padding: 6px 12px;
-      border-radius: 999px;
-      background: #1e293b;
-      color: #e2e8f0;
-      font-size: 13px;
-      border: 1px solid rgba(255,255,255,0.08);
-      cursor: pointer;
-      user-select: none;
-      transition: 0.2s ease;
-    }
+.card:hover{
+  transform:translateY(-6px);
+}
 
-    .size-badge:hover {
-      transform: translateY(-1px);
-    }
+.card img{
+  width:100%;
+  height:300px;
+  object-fit:cover;
+}
 
-    .size-badge.active-ready {
-      background: rgba(34,197,94,0.15);
-      color: #4ade80;
-      border-color: rgba(34,197,94,0.35);
-    }
+.content{
+  padding:15px;
+}
 
-    .size-badge.active-soldout {
-      background: rgba(248,113,113,0.15);
-      color: #f87171;
-      border-color: rgba(248,113,113,0.35);
-    }
+.brand{
+  font-size:12px;
+  color:#aaa;
+}
 
-    .telegram-btn {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      text-decoration: none;
-      background: #22c55e;
-      color: #08110d;
-      padding: 12px 14px;
-      border-radius: 12px;
-      font-weight: bold;
-      transition: 0.2s ease;
-      margin-top: auto;
-    }
+.name{
+  font-size:18px;
+  margin:5px 0;
+}
 
-    .telegram-btn:hover {
-      background: #16a34a;
-      color: #fff;
-    }
+.price{
+  color:#d4af37;
+  font-weight:bold;
+  margin-bottom:10px;
+}
 
-    .footer {
-      text-align: center;
-      color: #94a3b8;
-      padding: 30px 20px 50px;
-      font-size: 14px;
-    }
+/* SIZE */
+.sizes{
+  display:flex;
+  gap:8px;
+  margin-bottom:15px;
+}
 
-    .note-box {
-      max-width: 1200px;
-      margin: 10px auto 0;
-      padding: 0 20px 10px;
-    }
+.size{
+  padding:5px 10px;
+  border-radius:20px;
+  border:1px solid #333;
+  font-size:12px;
+  cursor:pointer;
+}
 
-    .note {
-      background: #111827;
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 16px;
-      color: #cbd5e1;
-      font-size: 14px;
-      line-height: 1.7;
-    }
+.size.ready{
+  border-color:#22c55e;
+  color:#22c55e;
+}
 
-    .empty-state {
-      grid-column: 1 / -1;
-      background: #111827;
-      padding: 30px;
-      border-radius: 20px;
-      text-align: center;
-      color: #cbd5e1;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+.size.sold{
+  border-color:#ef4444;
+  color:#ef4444;
+}
 
-    @media (max-width: 640px) {
-      .topbar {
-        flex-direction: column;
-        align-items: stretch;
-      }
+/* BUTTON */
+.order{
+  display:block;
+  text-align:center;
+  padding:10px;
+  border-radius:30px;
+  border:1px solid #d4af37;
+  color:#d4af37;
+  text-decoration:none;
+}
 
-      .search-box input {
-        width: 100%;
-      }
+.order:hover{
+  background:#d4af37;
+  color:#000;
+}
 
-      .header h1 {
-        font-size: 28px;
-      }
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:30px;
+  border-top:1px solid #222;
+  color:#777;
+}
 
-      .product-name {
-        min-height: auto;
-      }
-    }
-  </style>
+@media(max-width:800px){
+  .hero{grid-template-columns:1fr}
+}
+
+.hero-img{
+  position:relative;
+}
+
+.hero-img::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to right, rgba(0,0,0,.4), rgba(0,0,0,.1));
+}
+
+.hero-text h1{
+  font-size:72px;
+  letter-spacing:2px;
+}
+
+.btn{
+  border:1px solid #d4af37;
+  color:#d4af37;
+  background:transparent;
+  transition:.3s;
+}
+
+.btn:hover{
+  background:#d4af37;
+  color:#000;
+  box-shadow:0 0 20px rgba(212,175,55,.4);
+}
+
+.sub{
+  color:#aaa;
+  letter-spacing:3px;
+  font-size:12px;
+  margin-bottom:10px;
+}
+
+.hero{
+  margin-bottom:80px;
+}
+
+/* ===== TEXT BERJALAN ===== */
+.top-bar{
+  background:#000;
+  overflow:hidden;
+  white-space:nowrap;
+  border-bottom:1px solid #222;
+}
+
+.top-bar span{
+  display:inline-block;
+  padding-left:100%;
+  animation:marquee 25s linear infinite;
+  color:#d4af37;
+  font-size:12px;
+  letter-spacing:3px;
+}
+
+@keyframes marquee{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-100%);}
+}
+
+.header{
+  background:rgba(10,10,10,.8);
+  backdrop-filter:blur(10px);
+  display:flex;
+  align-items:center;
+  justify-content:flex-end; /* ubah ini */
+  padding:18px 40px;
+  border-bottom:1px solid #222;
+  z-index:100;
+}
+
+.logo{
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:24px;
+  font-weight:800;
+  letter-spacing:5px;
+}
+
+</style>
 </head>
+
 <body>
 
-<div class="header" style="text-align:center;">
-  <a href="https://primeoutfit-store.com">
-  </a>
-  <h1 style="letter-spacing:3px; font-weight:700;">
-    PRIME
-    <span style="color:#22c55e;">OUTFIT</span>
-  </h1>
-  <p>Simple. Trendy. Elegant. 100% Original.</p>
+<div class="top-bar">
+  <span>
+    ● 100% ORIGINAL ● FAST RESPONSE ● QUALITY PREMIUM ● PRIME OUTFIT COLLECTION ● STYLE YOUR IDENTITY ●
+  </span>
 </div>
 
-  <div class="topbar">
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Pencarian" />
-    </div>
+<header class="header">
+  <div class="logo">PRIME <span>OUTFIT</span></div>
+  <div class="nav">
+    <a href="#"></a>
+    <a href="#produk"></a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>STYLE YOUR <span>IDENTITY</span></h1>
+    <p>Tampil clean, simple, dan elegant dengan koleksi pilihan terbaik.</p>
+    <a href="#produk" class="btn">Explore</a>
+  </div>
+  <div class="hero-img"></div>
+</section>
+
+<section class="container" id="produk">
+  <div class="title">
+    <h2><span>Collection</span></h2>
   </div>
 
-  <div class="note-box">
-    <div class="note">
-      Klik size untuk lihat status ukuran ready atau soldOut. Klik tombol Telegram untuk order.
-    </div>
+  <div class="search">
+    <input type="text" id="search" placeholder="Cari produk...">
   </div>
 
-  <div class="container">
-    <h2 class="section-title">Daftar Produk</h2>
-    <div class="products" id="productList"></div>
-  </div>
+  <div class="products" id="list"></div>
+</section>
 
-  <div class="footer">
-    © 2026 Prime Outfit — Order via Telegram
-  </div>
+<footer class="footer">
+  © 2026 Prime Outfit
+</footer>
 
-  <script>
-    const telegramUsername = "usernamekamu";
+<script>
+const telegram = "usernamekamu";
 
-    const products = [
-      {
-        brand: "Lacoste",
-        name: "Polo Lacoste White",
-        price: "THB : 1.200",
-        stock: 8,
-        sizes: [
-          { name: "M", soldOut: false },
-          { name: "L", soldOut: false },
-          { name: "XL", soldOut: false }
-        ],
-        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        brand: "Lacoste",
-        name: "Polo Lacoste Black",
-        price: "THB : 2.000",
-        stock: 3,
-        sizes: [
-          { name: "M", soldOut: false },
-          { name: "L", soldOut: true },
-          { name: "XL", soldOut: false }
-        ],
-        image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        brand: "Fred Perry",
-        name: "Fred Perry Twin Tipped Shirt",
-        price: "THB : 2.500",
-        stock: 5,
-        sizes: [
-          { name: "S", soldOut: false },
-          { name: "M", soldOut: false },
-          { name: "L", soldOut: false }
-        ],
-        image: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=900&q=80"
-      },
-      {
-        brand: "Fred Perry",
-        name: "Fred Perry Black Polo",
-        price: "THB : 2.300",
-        stock: 0,
-        sizes: [
-          { name: "M", soldOut: true },
-          { name: "L", soldOut: true },
-          { name: "XL", soldOut: true }
-        ],
-        image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=900&q=80"
-      }
-    ];
+const products = [
+{
+brand:"Lacoste",
+name:"Polo White",
+price:"THB 1.200",
+sizes:[
+{name:"M",stock:true},
+{name:"L",stock:true},
+{name:"XL",stock:false}
+],
+img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab"
+},
+{
+brand:"Lacoste",
+name:"Polo Black",
+price:"THB 2.000",
+sizes:[
+{name:"M",stock:true},
+{name:"L",stock:false},
+{name:"XL",stock:false}
+],
+img:"https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
+},
+{
+brand:"Fred Perry",
+name:"Twin Tipped Shirt",
+price:"THB 2.500",
+sizes:[
+{name:"S",stock:true},
+{name:"M",stock:true},
+{name:"L",stock:true}
+],
+img:"https://images.unsplash.com/photo-1503342217505-b0a15ec3261c"
+}
+];
 
-    function normalizeProducts() {
-      products.forEach(product => {
-        if (product.stock === 0) {
-          product.sizes = product.sizes.map(size => ({
-            ...size,
-            soldOut: true
-          }));
-        }
-      });
-    }
+const list = document.getElementById("list");
+const search = document.getElementById("search");
 
-    normalizeProducts();
+function render(){
+const key = search.value.toLowerCase();
 
-    function telegramLink(product) {
-      const availableSizes = product.sizes
-        .filter(size => !size.soldOut)
-        .map(size => size.name)
-        .join(", ");
+list.innerHTML = products.filter(p=>{
+return p.name.toLowerCase().includes(key);
+}).map(p=>`
+<div class="card">
+<img src="${p.img}">
+<div class="content">
+<div class="brand">${p.brand}</div>
+<div class="name">${p.name}</div>
+<div class="price">${p.price}</div>
 
-      const text =
-        `Halo kak, saya mau order:%0A%0A` +
-        `Brand: ${product.brand}%0A` +
-        `Nama: ${product.name}%0A` +
-        `Harga: ${product.price}%0A` +
-        `Ukuran tersedia: ${availableSizes || "Silakan tanya admin"}`;
+<div class="sizes">
+${p.sizes.map(s=>`
+<div class="size ${s.stock ? 'ready':'sold'}">
+${s.name}
+</div>
+`).join("")}
+</div>
 
-      return `https://t.me/${telegramUsername}?text=${text}`;
-    }
+<a class="order" href="https://t.me/${telegram}?text=Order ${p.name}" target="_blank">
+Order via Telegram
+</a>
 
-    function toggleSizeStatus(el) {
-      const sizeName = el.dataset.sizeName;
-      const isSoldOut = el.dataset.soldOut === "true";
+</div>
+</div>
+`).join("");
+}
 
-      const alreadyActiveReady = el.classList.contains("active-ready");
-      const alreadyActiveSoldOut = el.classList.contains("active-soldout");
+search.addEventListener("input",render);
+render();
+</script>
 
-      el.classList.remove("active-ready", "active-soldout");
-
-      if (alreadyActiveReady || alreadyActiveSoldOut) {
-        el.textContent = sizeName;
-        return;
-      }
-
-      if (isSoldOut) {
-        el.classList.add("active-soldout");
-        el.textContent = `${sizeName} - Sold Out`;
-      } else {
-        el.classList.add("active-ready");
-        el.textContent = `${sizeName} - Ready`;
-      }
-    }
-
-    function renderProducts() {
-      const keyword = searchInput.value.toLowerCase();
-
-      const filtered = products.filter(product => {
-        const matchBrand = true;
-
-        const searchableText = [
-          product.brand,
-          product.name,
-          product.price,
-          ...product.sizes.map(size => size.name)
-        ].join(" ").toLowerCase();
-
-        const matchSearch = searchableText.includes(keyword);
-
-        return matchBrand && matchSearch;
-      });
-
-      if (filtered.length === 0) {
-        productList.innerHTML = `
-          <div class="empty-state">
-            Produk tidak ditemukan.
-          </div>
-        `;
-        return;
-      }
-
-      productList.innerHTML = filtered.map(product => `
-        <div class="card">
-          <img src="${product.image}" alt="${product.name}">
-          <div class="card-content">
-            <span class="brand-tag">${product.brand}</span>
-            <h3 class="product-name">${product.name}</h3>
-            <div class="price">${product.price}</div>
-
-            <div class="info-label"><strong>Size:</strong></div>
-            <div class="size-list">
-              ${product.sizes.map(size => `
-                <span
-                  class="size-badge"
-                  data-size-name="${size.name}"
-                  data-sold-out="${size.soldOut}"
-                  onclick="toggleSizeStatus(this)"
-                >
-                  ${size.name}
-                </span>
-              `).join("")}
-            </div>
-
-            <a class="telegram-btn" href="${telegramLink(product)}" target="_blank">
-              Order via Telegram
-            </a>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    searchInput.addEventListener("input", renderProducts);
-
-    renderProducts();
-  </script>
 </body>
 </html>
