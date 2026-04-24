@@ -1,2 +1,2 @@
 # PrimeOutfit
-Prime Outfit — Style terbaik untuk versi terbaik dirimu. Simple. Trendy. Premium look.
+Prime Outfit — Simple. Trendy. Elegant. 100% Original.
